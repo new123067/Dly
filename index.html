@@ -3,45 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEON OVERDRIVE Game</title>
+    <title>NEON OVERDRIVE</title>
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #fff;
-        }
-        canvas {
-            display: block;
-            margin: 0 auto;
-            background-color: #000;
-        }
+        body { background: black; color: white; font-family: Arial, sans-serif; }
+        #gameCanvas { border: 1px solid white; }
     </style>
 </head>
 <body>
+    <h1>Welcome to NEON OVERDRIVE</h1>
     <canvas id="gameCanvas" width="800" height="600"></canvas>
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
-        let x = canvas.width / 2;
-        let y = canvas.height / 2;
-        const radius = 20;
+        let player;
+        let obstacles = [];
+        let particles = [];
+        let score = 0;
 
-        function draw() {
+        function init() {
+            player = new Player();
+            createObstacles();
+            createParticles();
+            gameLoop();
+        }
+
+        function Player() {
+            this.x = canvas.width / 2;
+            this.y = canvas.height - 30;
+            this.width = 20;
+            this.height = 20;
+            this.speed = 5;
+            this.draw = function() {
+                ctx.fillStyle = 'cyan';
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            };
+            this.update = function() {
+                // Handle player movement
+            };
+        }
+
+        function createObstacles() {
+            // Create obstacles for the game
+        }
+
+        function createParticles() {
+            // Create particle effects
+        }
+
+        function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#1e88e5';
-            ctx.beginPath();
-            ctx.arc(x, y, radius, 0, Math.PI * 2);
-            ctx.fill();
+            player.update();
+            player.draw();
+            requestAnimationFrame(gameLoop);
         }
 
-        function update() {
-            x += Math.random() * 4 - 2; // Randomly move x
-            y += Math.random() * 4 - 2; // Randomly move y
-            draw();
-        }
+        window.addEventListener('keydown', function(event) {
+            // Handle key down events
+        });
 
-        setInterval(update, 100);
+        init();
     </script>
 </body>
 </html>
