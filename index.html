@@ -3,59 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEON OVERDRIVE</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <title>NEON OVERDRIVE Game</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+        }
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background-color: #000;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to NEON OVERDRIVE</h1>
-    </header>
-    <main>
-        <section id="game">
-            <canvas id="gameCanvas"></canvas>
-            <button id="startButton">Start Game</button>
-        </section>
-    </main>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let x = canvas.width / 2;
+        let y = canvas.height / 2;
+        const radius = 20;
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#1e88e5';
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function update() {
+            x += Math.random() * 4 - 2; // Randomly move x
+            y += Math.random() * 4 - 2; // Randomly move y
+            draw();
+        }
+
+        setInterval(update, 100);
+    </script>
 </body>
 </html>
-
-/* styles.css */
-body {
-    background-color: black;
-    color: white;
-    font-family: 'Arial', sans-serif;
-}
-
-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-#gameCanvas {
-    border: 1px solid white;
-}
-
-/* script.js */
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-
-canvas.width = 800;
-canvas.height = 600;
-
-let isGameRunning = false;
-
-function startGame() {
-    isGameRunning = true;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    gameLoop();
-}
-
-function gameLoop() {
-    if (isGameRunning) {
-        // Game logic goes here
-        requestAnimationFrame(gameLoop);
-    }
-}
-
-document.getElementById('startButton').addEventListener('click', startGame);
